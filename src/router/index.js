@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import ProjectDescription from '../views/ProjectDescription.vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -20,6 +21,11 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  {
+    path: '/projectDescription',
+    name: 'ProjectDescription',
+    component: ProjectDescription
+  }
 ]
 
 const router = new VueRouter({

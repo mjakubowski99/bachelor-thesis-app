@@ -65,14 +65,14 @@ function getVertexWithZeroInEdges(graph){
 
 function topologicalSort(graph, queue){
 
-    topological_order = [];
+    let topological_order = [];
     while(queue.length !==0 ){
-        n = queue[0];
+        let n = queue[0];
         queue.shift();
         topological_order.push(n);
 
         while(graph[n].neighbours.length != 0){
-            neighbour = graph[n].neighbours[0];
+            let neighbour = graph[n].neighbours[0];
             graph[n].neighbours.shift();
             graph[neighbour].inEdges.shift();
             if( graph[neighbour].inEdges.length === 0 ){
@@ -89,33 +89,41 @@ function topologicalSort(graph, queue){
     return topological_order;
 }
 
-function criticalPath(graph, order){
-    let distance = new Array(graph[i].getSize).fill(0);
-    for(let i=0; i<order; i++){
-        v = order[i];
-        for(let i=0; i<graph[v].neighbours.length; i++){
-            neighbour = graph[v].neighbours[i];
-            weight = graph[v].weight[i];
+function criticalPath(graphClass, order, dest){
+    let graph = graphClass.getGraph;
+    let distance = new Array(graphClass.getSize).fill(0);
+    for(let i=0; i<order.length; i++){
+        let v = order[i];
+        for(let j=0; j<graph[v].neighbours.length; j++){
+            let neighbour = graph[v].neighbours[j];
+            let weight = graph[v].weight[j];
 
             if( distance[neighbour] < distance[v] + weight ){
                 distance[neighbour] = distance[v] + weight;
             }
         }
     }
+    return distance[dest];
 }
 
 let graph = new Graph(9);
-graph.addEdge(1,2,);
-graph.addEdge(1,4);
-graph.addEdge(1,6);
-graph.addEdge(6,7);
-graph.addEdge(7,8);
-graph.addEdge(7,9);
-graph.addEdge(4,5);
-graph.addEdge(2,3);
-graph.addEdge(5,3);
-graph.addEdge(9,1);
+// graph.addEdge(1,2,);
+// graph.addEdge(1,4);
+// graph.addEdge(1,6);
+// graph.addEdge(6,7);
+// graph.addEdge(7,8);
+// graph.addEdge(7,9);
+// graph.addEdge(4,5);
+// graph.addEdge(2,3);
+// graph.addEdge(5,3);
+// graph.addEdge(9,1);
+
+graph.addEdge(1,2, 2);
+graph.addEdge(2,3, 4);
+graph.addEdge(1,4, 5);
 
 let queue = getVertexWithZeroInEdges(graph.getGraph);
 
-console.log( topologicalSort(graph.getGraph, queue) );
+let order = topologicalSort(graph.getGraph, queue);
+console.log(order);
+console.log( criticalPath(graph, order, 3) );

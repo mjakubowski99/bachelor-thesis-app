@@ -35,7 +35,7 @@ export class IntervalGraphColoring{
             this.assignMinFreeColor(vertex);
         }
 
-        this.printColoring();    
+        return this.color;
     }
 
     printColoring(){

@@ -10,9 +10,9 @@
 <script>
 import NavbarComponent from '../components/NavbarComponent.vue'
 
-import {GraphCreator} from '../algorithms/IntervalColoring/GraphCreator.js'
-import {LexBfs} from '../algorithms/IntervalColoring/LexBfs.js'
-import {IntervalGraphColoring} from '../algorithms/IntervalColoring/IntervalGraphColoring.js'
+//import {GraphCreator} from '../algorithms/IntervalColoring/GraphCreator.js'
+//import {LexBfs} from '../algorithms/IntervalColoring/LexBfs.js'
+//import {IntervalGraphColoring} from '../algorithms/IntervalColoring/IntervalGraphColoring.js'
 
 export default {
     name: 'ProjectDescription',
@@ -21,7 +21,7 @@ export default {
     },
     methods: {
         run: function(){
-            const creator = new GraphCreator(5);
+         /*   const creator = new GraphCreator(5);
             creator.addEdge(1,2);
             creator.addEdge(1,3);
             creator.addEdge(3,4);
@@ -29,10 +29,8 @@ export default {
             const graph = creator.getGraph;
             const lexBfs = new LexBfs(graph);
             let order = lexBfs.doLexBfs();
-            console.log(order);
 
-            let color = new IntervalGraphColoring(graph);
-            color.coloring(order);
+            let color = new IntervalGraphColoring(graph); */
         }
     }
 }

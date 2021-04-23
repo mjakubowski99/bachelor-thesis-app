@@ -3,10 +3,13 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import ProjectDescription from '../views/ProjectDescription.vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import VueCytoscape from 'vue-cytoscape'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 import TrainScheduling from "../views/TrainScheduling";
+import IntervalGraphColoringVisual from "../views/IntervalGraphColoringVisual";
 
 
 // Make BootstrapVue available throughout your project
@@ -15,6 +18,8 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 Vue.use(VueRouter)
+
+Vue.use(VueCytoscape);
 
 const routes = [
   {
@@ -31,7 +36,12 @@ const routes = [
     path: '/trainScheduling',
     name: 'TrainScheduling',
     component: TrainScheduling
-  }
+  },
+  {
+    path: '/intervalColoring',
+    name: 'IntervalColoringVisual',
+    component: IntervalGraphColoringVisual
+  },
 ]
 
 const router = new VueRouter({

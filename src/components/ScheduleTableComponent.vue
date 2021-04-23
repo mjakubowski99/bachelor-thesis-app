@@ -1,7 +1,7 @@
 <template>
   <div id="container" class="ml-5 mr-5">
     <table id="table" class="table table-bordered table-dark">
-      <thead>
+      <thead class="bg-primary">
       <tr>
         <th scope="col">Numer</th>
         <th scope="col">Godzina poczatkowa</th>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+
 export default {
   name: "ScheduleTableComponent",
   data(){
@@ -52,7 +53,7 @@ export default {
     },
     scrollToDown(){
       this.$el.scrollIntoView(false);
-    },
+    }
   },
 }
 </script>

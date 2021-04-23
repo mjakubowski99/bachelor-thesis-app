@@ -15,6 +15,6 @@ export default {
 }
 
 </script>
-  
+  //comment
 <style scoped>
 </style>

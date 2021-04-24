@@ -18,7 +18,6 @@ export class GraphCreator{
     addEdge(v1, v2){
         this.checkIfVertexExistIfNotCreate(v1);
         this.checkIfVertexExistIfNotCreate(v2);
-
         this.graph[v1].addNeighbour(v2);
         this.graph[v2].addNeighbour(v1);
     }

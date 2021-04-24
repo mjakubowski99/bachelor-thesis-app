@@ -9,11 +9,10 @@
       <p></p>
     </div>
 
-    <cytoscape class="bg-dark mt-5 ml-auto mr-auto border border-secondary"
+    <cytoscape class="mt-5 mb-5 h-75 ml-auto mr-auto border border-secondary"
         ref="cyRef"
         :config="config"
-        v-on:mousedown="addNode"
-        v-on:cxttapstart="updateNode"
+        :afterCreated="afterCreated"
     >
       <cy-element
           v-for="def in elements"
@@ -38,13 +37,21 @@ export default {
   components: {NavbarComponent},
   data() {
     return {
+      colors: [
+          'red',
+          'green',
+          'blue',
+          'yellow',
+          'green',
+          'orange'
+      ],
       config: {
         style: [
           {
             selector: "node",
             style: {
-                  "background-color":
-                  "#666", label: "data(id)"
+              "background-color": "#666",
+              label: "data(id)"
             }
           },
           {
@@ -60,82 +67,56 @@ export default {
         layout: { name: "grid", rows: 1 }
       },
       elements: [
-       /* {
-          data: { id: "a" },
-          position: { x: 100, y: 100 },
-          group: "nodes"
-        },
-        {
-          data: { id: "b" },
-          position: { x: 100, y: 300 },
-          group: "nodes"
-        },
-        {
-          data: { id: "c" },
-          position: { x: 489, y: 282 },
-          group: "nodes"
-        },
-        {
-          data: { id: "ab", source: "a", target: "b" },
-          group: "edges"
-        },
-        {
-          data: { id: "ac", source: "a", target: "c" },
-          group: "edges"
-        } */
       ],
       graph: null,
       intervalColoring: null
     };
   },
-  mounted() {
-    this.coloring();
-    for(let i=0; i<this.graph.length; i++){
-      if( this.graph[i] !== undefined && this.graph[i].neighbours.length !== 0 ){
-        this.elements.push(
-            {
-              data: { id: this.graph[i].v },
-              position: { x: this.getRandomInt(100,1000), y: this.getRandomInt(100,1000) },
-              group: "nodes"
-            },
-        );
-        console.log(this.config);
+  created() {
+      this.coloring();
+      console.log(this.graph)
+      for(let i=0; i<this.graph.length; i++){
+          if( this.graph[i] !== undefined && this.graph[i].neighbours.length !== 0 ){
+              this.elements.push(
+                  {
+                    data: { id: this.graph[i].v },
+                    position: { x: this.getRandomInt(100,500), y: this.getRandomInt(100,500) },
+                    group: "nodes"
+                  },
+              );
+          }
       }
-    }
 
-   /* let h = 0;
-    for(let i=0; i<this.graph.length; i++){
-      if( this.graph[i] !== undefined ){
-        for(let j=0; j<this.graph[i].neighbours[j]; j++){
+    let h = 0;
+    for(let i=0; i<this.graph.length; i++) {
+      if (this.graph[i] !== undefined) {
+        for (let j = 0; j < this.graph[i].neighbours.length; j++) {
           this.elements.push(
               {
-                data: { id: h, source: this.graph[i].v, target: this.graph[i].neighbours[j] },
+                data: {id: 'edge-'+h, source: this.graph[i].v, target: this.graph[i].neighbours[j]},
                 group: "edges"
               }
           );
           h++;
         }
       }
-    } */
+    }
+
   },
   methods: {
-    addNode(event) {
-      console.log(event.target, this.$refs.cyRef.instance);
-      if (event.target === this.$refs.cyRef.instance)
-        console.log("adding node", event.target);
-    },
-    deleteNode(id) {
-      console.log("node clicked", id);
-    },
-    updateNode(event) {
-      console.log("right click node", event);
-    },
-    preConfig(cytoscape) {
-      console.log("calling pre-config", cytoscape);
-    },
     afterCreated(cy) {
-      // cy: this is the cytoscape instance
-      console.log("after created", cy);
+      let inc = 1;
+      for(let i=0; i<this.intervalColoring.length; i++){
+          if( this.intervalColoring[i] !== -1 ){
+            setTimeout( () => {
+              cy.style()
+                  .selector('#'+String(i) )
+                  .style('background-color', this.colors[ this.intervalColoring[i] ] )
+                  .update()
+            }, 1000*inc, cy);
+            inc++;
+          }
+      }
     },
     coloring(){
       const creator = new GraphCreator(8);

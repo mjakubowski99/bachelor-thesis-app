@@ -3,7 +3,7 @@
       bg-variant="dark"
       text-variant="white"
       border-variant="dark"
-      class="mt-5 border border-light"
+      class="mt-5 border border-light text-center"
   >
     <template #header> {{ header }} </template>
 

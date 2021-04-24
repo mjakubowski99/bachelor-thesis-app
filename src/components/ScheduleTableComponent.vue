@@ -1,7 +1,7 @@
 <template>
   <div id="container" class="ml-5 mr-5">
     <table id="table" class="table table-bordered table-dark">
-      <thead class="bg-primary">
+      <thead class="bg-dark">
       <tr>
         <th scope="col">Numer</th>
         <th scope="col">Godzina poczatkowa</th>
@@ -14,16 +14,18 @@
           {{ item.number }}
         </td>
         <td>
-          <b-form-timepicker class="w-50 mx-auto" v-model="item.start" locale="pl"></b-form-timepicker>
+          <b-form-timepicker class="w-50 mx-auto bg-dark" v-model="item.start" locale="pl"></b-form-timepicker>
         </td>
         <td>
-          <b-form-timepicker class="w-50 mx-auto" v-model="item.end" locale="pl"></b-form-timepicker>
+          <b-form-timepicker class="w-50 mx-auto bg-dark" v-model="item.end" locale="pl"></b-form-timepicker>
         </td>
       </tr>
       </tbody>
     </table>
-    <button @click="addItem()" id="add-item" class="btn btn-primary mb-5 mr-2"> Dodaj godzine odjazdu </button>
-    <button v-on:click="$emit('get-schedule', items)" class="btn btn-danger mb-5 mr-2"> Oblicz minimalna liczbe </button>
+    <div class="text-center">
+      <button @click="addItem()" id="add-item" class="btn btn-primary mb-5 mr-2"> Dodaj godzine odjazdu </button>
+      <button v-on:click="$emit('get-schedule', items)" class="btn btn-danger mb-5 mr-2"> Wygeneruj rozkład </button>
+    </div>
   </div>
 </template>
 

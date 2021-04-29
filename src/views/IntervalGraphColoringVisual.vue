@@ -1,27 +1,36 @@
 <template>
   <div id="app">
-    <navbar-component> </navbar-component>
+        <navbar-component> </navbar-component>
 
-    <div class="jumbotron text-center text-light">
-      <h1 class="display-4">Wizualizacja</h1>
-      <p class="lead"> Kolorowania grafu interwałowego </p>
-      <hr class="my-4">
-      <p></p>
+        <div class="jumbotron text-center text-light">
+          <h1 class="display-4">Wizualizacja</h1>
+          <p class="lead"> Kolorowania grafu interwałowego </p>
+          <hr class="my-4">
+          <p></p>
+        </div>
+
+    <div class="card ml-auto mr-auto border-0" style="width: 95%;">
+      <div class="card-header text-center text-light h3" style="background-color: black;">
+        Wizualizacja
+      </div>
+      <ul class="list-group list-group-flush bg-dark">
+        <cytoscape class="mt-5
+                          mb-5 h-75 ml-auto
+                          mr-auto cyto visual-color"
+            ref="cyRef"
+            :config="config"
+            :afterCreated="afterCreated"
+        >
+          <cy-element
+              v-for="def in elements"
+              :key="`${def.data.id}`"
+              :definition="def"
+              v-on:mousedown="deleteNode($event, def.data.id)"
+          />
+        </cytoscape>
+      </ul>
+      </div>
     </div>
-
-    <cytoscape class="mt-5 mb-5 h-75 ml-auto mr-auto border border-secondary"
-        ref="cyRef"
-        :config="config"
-        :afterCreated="afterCreated"
-    >
-      <cy-element
-          v-for="def in elements"
-          :key="`${def.data.id}`"
-          :definition="def"
-          v-on:mousedown="deleteNode($event, def.data.id)"
-      />
-    </cytoscape>
-  </div>
 </template>
 
 <script>
@@ -50,7 +59,7 @@ export default {
           {
             selector: "node",
             style: {
-              "background-color": "#666",
+              "background-color": "#333333",
               label: "data(id)"
             }
           },
@@ -58,7 +67,7 @@ export default {
             selector: "edge",
             style: {
               width: 3,
-              "line-color": "#660066",
+              "line-color": "#0d0d0d",
               "target-arrow-color": "#ccc",
               "target-arrow-shape": "triangle"
             }
@@ -156,6 +165,16 @@ export default {
     background: #ad5389; /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #ad5389, #3c1053); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #ad5389, #3c1053); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+
+  .visual-color{
+    background: #141E30;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+
+  .cyto{
+     width: 95%;
   }
 
 </style>

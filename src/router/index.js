@@ -10,6 +10,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import TrainScheduling from "../views/TrainScheduling";
 import IntervalGraphColoringVisual from "../views/IntervalGraphColoringVisual";
+import CriticalPath from "../views/CriticalPath";
 
 
 // Make BootstrapVue available throughout your project
@@ -41,6 +42,11 @@ const routes = [
     path: '/intervalColoring',
     name: 'IntervalColoringVisual',
     component: IntervalGraphColoringVisual
+  },
+  {
+    path: '/criticalPath',
+    name: 'CriticalPath',
+    component: CriticalPath,
   },
 ]
 

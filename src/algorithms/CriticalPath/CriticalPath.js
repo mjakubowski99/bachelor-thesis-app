@@ -18,14 +18,18 @@ export class CriticalPath{
             queue.shift();
             topological_order.push(n);
 
-            while(graph[n].neighbours.length != 0){
-                let neighbour = graph[n].neighbours[0];
-                graph[n].neighbours.shift();
-                graph[neighbour].inEdges.shift();
-                if( graph[neighbour].inEdges.length === 0 ){
-                    queue.push(neighbour);
-                }
+            if( graph[n] !== undefined ) {
+                while (graph[n].neighbours.length != 0) {
+                    let neighbour = graph[n].neighbours[0];
+                    graph[n].neighbours.shift();
 
+                    if( graph[neighbour] !== undefined ) {
+                        graph[neighbour].inEdges.shift();
+                        if (graph[neighbour].inEdges.length === 0) {
+                            queue.push(neighbour);
+                        }
+                    }
+                }
             }
         }
 
@@ -39,15 +43,17 @@ export class CriticalPath{
     criticalPath(graphClass, order){
         let graph = graphClass.getGraph;
         let distance = new Array(graphClass.getSize).fill(0);
+        console.log(graph);
         for(let i=0; i<order.length; i++){
             let v = order[i];
-            for(let j=0; j<graph[v].neighbours.length; j++){
-                let neighbour = graph[v].neighbours[j];
-                let weight = graph[v].weight[j];
 
-                if( distance[neighbour] < distance[v] + weight ){
-                    distance[neighbour] = distance[v] + weight;
-                }
+            for (let j = 0; j < graph[v].neighbours.length; j++) {
+                    let neighbour = graph[v].neighbours[j];
+                    let weight = graph[v].weight[j];
+
+                    if (distance[neighbour] < distance[v] + weight) {
+                        distance[neighbour] = distance[v] + weight;
+                    }
             }
         }
         return distance[ order[order.length-1] ];

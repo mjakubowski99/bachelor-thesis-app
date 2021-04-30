@@ -5,6 +5,18 @@
 </template>
 
 <style>
+    .text-violet{
+        color: #8000ff;
+    }
+
+    .bg-violet{
+        background-color: #8000ff;
+    }
+
+    .button{
+
+    }
+
     #app {
       font-family: Avenir, Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;

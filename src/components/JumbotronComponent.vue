@@ -1,9 +1,8 @@
 <template>
   <b-jumbotron
-      bg-variant="dark"
       text-variant="white"
-      border-variant="dark"
-      class="mt-5 border border-light text-center"
+      class="border border-light text-center bg-violet"
+      style="background-color: #8000ff;"
   >
     <template #header> {{ header }} </template>
 

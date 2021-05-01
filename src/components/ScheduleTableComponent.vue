@@ -1,7 +1,7 @@
 <template>
   <div id="container" class="ml-5 mr-5">
-    <table id="table" class="table table-bordered table-dark">
-      <thead class="bg-dark">
+    <table id="table" class="table table-bordered border-dark" style="box-shadow: 5px 5px 19px -4px #000000;">
+      <thead class="bg-dark text-light">
       <tr>
         <th scope="col">Numer</th>
         <th scope="col">Godzina poczatkowa</th>
@@ -14,10 +14,10 @@
           {{ item.number }}
         </td>
         <td>
-          <b-form-timepicker class="w-50 mx-auto bg-dark" v-model="item.start" locale="pl"></b-form-timepicker>
+          <b-form-timepicker class="w-50 mx-auto" v-model="item.start" locale="pl"></b-form-timepicker>
         </td>
         <td>
-          <b-form-timepicker class="w-50 mx-auto bg-dark" v-model="item.end" locale="pl"></b-form-timepicker>
+          <b-form-timepicker class="w-50 mx-auto" v-model="item.end" locale="pl"></b-form-timepicker>
         </td>
       </tr>
       </tbody>

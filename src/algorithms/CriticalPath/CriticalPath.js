@@ -43,7 +43,7 @@ export class CriticalPath{
     criticalPath(graphClass, order){
         let graph = graphClass.getGraph;
         let distance = new Array(graphClass.getSize).fill(0);
-        console.log(graph);
+
         for(let i=0; i<order.length; i++){
             let v = order[i];
 

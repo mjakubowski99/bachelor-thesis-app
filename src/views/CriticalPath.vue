@@ -4,7 +4,7 @@
           <navbar-component> </navbar-component>
           <div class="text-light bg-white mt-5 w-75 ml-auto mr-auto rounded">
               <br>
-              <div class="mt-2 ml-5 h2 text-violet"> PLAN PROJECT </div>
+              <div class="mt-2 border-bottom border-muted h2 text-dark text-center"> Plan Project </div>
 
               <div class="d-flex text-dark">
                 <div class="data-container ml-3 mb-3 mr-3 w-50 mt-4">
@@ -12,7 +12,7 @@
 
                     <label for="task-name" class="mt-2 ml-3 text-secondary"> Podaj treść zadania </label>
                     <input type="text" class="form-control w-50 ml-3" id="task-name" placeholder="Nazwa zadania">
-                    <label for="task-length" class="mt-2 ml-3 text-secondary"> Podaj długość trwania zadania </label>
+                    <label for="task-length" class="mt-2 ml-3 text-secondary"> Podaj długość trwania zadania( w godzinach )</label>
                     <input type="text" class="form-control w-50 ml-3" id="task-length" placeholder="Długość trwania">
 
                     <button v-on:click="addTask" class="btn text-light ml-3 mt-3 mb-3" style="background-color: #8000ff;"> Dodaj zadanie </button>
@@ -26,9 +26,7 @@
                             {{ item.task }}
                           </button>
                           <button v-on:click="deleteTask(index)" class="btn btn-danger" :id="'delete-'+index">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive">
-                              <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-                            </svg>
+                              <delete-icon> </delete-icon>
                           </button>
                       </div>
                     </ul>
@@ -37,16 +35,20 @@
           </div>
       </div>
 
-    <div class="h1 ml-auto mr-auto text-center rounded bg-dark text-light w-50 mt-3"> Zaleznosci między zadaniami </div>
+    <div class="h1 ml-auto mr-auto text-center rounded bg-dark text-light w-50 mt-3">
+      Zaleznosci między zadaniami
+    </div>
+
     <div class="data-container w-50 ml-auto mr-auto text-dark">
-      <div v-for="(item, index) in matchings" :key="index" class="list-group-item text-center">
-        <button type="button" class="btn btn-outline-primary mr-3"> {{ items[item[0]].task}}</button>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-        </svg>
-        <button type="button" class="btn btn-outline-primary ml-3">{{ items[item[1]].task}}</button>
+      <div v-for="(item, index) in matchings" :key="index" v-on:click="deleteMatching(index)"
+           class="list-group-item text-center">
+            <div class="btn btn-outline-primary mr-3"> {{ items[item[0]].task}}</div>
+            <arrow-icon> </arrow-icon>
+            <div class="btn btn-outline-primary ml-3">{{ items[item[1]].task}}</div>
       </div>
     </div>
+
+    <critical-path-algorithm-component :data="items" :matching="matchings"> </critical-path-algorithm-component>
   </div>
 </template>
 
@@ -56,9 +58,13 @@
 //import {CriticalPath} from '../algorithms/CriticalPath/CriticalPath.js';
 
 import NavbarComponent from "../components/NavbarComponent";
+import DeleteIcon from "../components/Icons/DeleteIcon";
+import ArrowIcon from "../components/Icons/ArrowIcon";
+import CriticalPathAlgorithmComponent from "../components/CriticalPathAlgorithmComponent";
+
 export default {
   name: "CriticalPath",
-  components: {NavbarComponent},
+  components: {CriticalPathAlgorithmComponent, ArrowIcon, DeleteIcon, NavbarComponent},
   data(){
     return{
       items: [],
@@ -70,21 +76,59 @@ export default {
 
   },
   methods: {
+      itemAlreadyExists(item){
+          for(let x of this.items){
+              if( x.task === item )
+                return true;
+          }
+          return false;
+      },
       addTask(){
 
           let task = document.getElementById('task-name' );
           let length = document.getElementById('task-length' );
 
-          this.items.push({
+          if( task.value === '' || length.value === ''){
+              alert('Wypełnij pole z zadaniem lub z długością zadania');
+              return;
+          }
+
+          if( isNaN( length.value ) ){
+              alert('Pole długości może zawierać tylko cyfry');
+              return;
+          }
+
+          if( !this.itemAlreadyExists(task.value) ) {
+            this.items.push({
               task: task.value,
               length: length.value
-          });
+            });
+          }
+          else{
+            alert("Zadanie z dokładnie taką samą nazwą zostało już podane");
+          }
+      },
+      itemAlreadyMatched(index){
+          for(let x of this.matchings ){
+              if( x[0] == index || x[1] == index )
+                return true;
+          }
+          return false;
       },
       deleteTask(index){
-          this.items.splice(index, 1);
+          if( !this.itemAlreadyMatched(index) )
+            this.items.splice(index, 1);
+          else
+            alert("Usun najpierw dopasowanie elementów, a potem element")
+      },
+      itemMatchToSecondItem(first, second){
+        for(let x of this.matchings ){
+          if( x[0] === first && x[1] === second )
+            return true;
+        }
+        return false;
       },
       match(index){
-
         if( this.firstIndex === null ){
           this.firstIndex = index;
           let firstElement = document.getElementById('task-' + index );
@@ -92,13 +136,26 @@ export default {
           firstElement.style.color = 'white';
         }
         else{
+          let firstElement = document.getElementById('task-' + this.firstIndex );
+          firstElement.style.backgroundColor = 'white';
+          firstElement.style.color = '#8000ff';
+
+          if( this.itemMatchToSecondItem(this.firstIndex, index) ){
+              alert("Takie dopasowanie już istnieje");
+          }
+          else if( this.firstIndex === index ){
+            alert("Nie możesz dopasować tych samych elementów");
+          }
+          else{
             this.matchings.push( [this.firstIndex, index] );
-            let firstElement = document.getElementById('task-' + this.firstIndex );
-            firstElement.style.backgroundColor = 'white';
-            firstElement.style.color = '#8000ff';
-            this.firstIndex = null;
+          }
+
+          this.firstIndex = null;
         }
 
+      },
+      deleteMatching(index){
+        this.matchings.splice(index, 1);
       }
   }
 }
@@ -116,6 +173,10 @@ export default {
 
   .btn-item:hover{
       border: 1px solid #8000ff;
+  }
+
+  .list-group-item:hover{
+    background-color: #e6e6e6;
   }
 </style>
 

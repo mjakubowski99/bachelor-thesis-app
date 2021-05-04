@@ -1,5 +1,10 @@
 export class CriticalPath{
 
+    constructor() {
+        this.max = -1;
+    }
+
+
     getVertexWithZeroInEdges(graph){
         let queue = [];
         for(let i = 0; i<graph.length; i++){
@@ -43,6 +48,7 @@ export class CriticalPath{
     criticalPath(graphClass, order){
         let graph = graphClass.getGraph;
         let distance = new Array(graphClass.getSize).fill(0);
+        let predecessor = new Array(graphClass.getSize);
 
         for(let i=0; i<order.length; i++){
             let v = order[i];
@@ -53,10 +59,22 @@ export class CriticalPath{
 
                     if (distance[neighbour] < distance[v] + weight) {
                         distance[neighbour] = distance[v] + weight;
+                        predecessor[neighbour] = v;
                     }
             }
         }
-        return distance[ order[order.length-1] ];
+
+        let max = -1;
+        let max_index = -1;
+        for(let i=0; i<distance.length; i++){
+            if( distance[i] !== undefined && distance[i] > max) {
+                max = distance[i];
+                max_index = i;
+            }
+        }
+        this.max = max_index;
+        console.log(predecessor);
+        return predecessor;
     }
 }
 

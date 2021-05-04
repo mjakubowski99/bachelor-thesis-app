@@ -3,9 +3,11 @@
       <button @click="criticalPath" class="btn btn-danger">
           Wyznacz ścieżkę
       </button>
-      <div v-if="length !== null ">
-        <div class="list-group-item mt-3 mb-3 w-50 ml-auto mr-auto"> Długość: {{length}} </div>
-      </div>
+        <div class="list-group-item mt-3 mb-3 w-50 ml-auto mr-auto">
+            <div v-for="vertex in path.slice().reverse()" :key="vertex">
+                {{ vertex }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -18,15 +20,14 @@ export default {
   props: ['data', 'matching'],
   data() {
     return{
-      length: null,
+      path: [],
     }
   },
   methods: {
     criticalPath(){
       let graph = new Graph(this.data.length+1)
-      for(let x of this.matching){
+      for(let x of this.matching)
         graph.addEdge(x[0], x[1], parseInt(this.data[x[0]].length));
-      }
 
       let criticalPath = new CriticalPath();
 
@@ -37,10 +38,18 @@ export default {
         alert("Podałeś zły graf, jedno z zadań nie może być przed drugim");
       }
       else{
+        graph = new Graph(this.data.length+1)
         for(let x of this.matching)
           graph.addEdge(x[0], x[1], parseInt( this.data[ x[0] ].length ) );
 
-        this.length = criticalPath.criticalPath(graph, order) + parseInt( this.data[ order[order.length-1] ].length );
+        let predecessor = criticalPath.criticalPath(graph, order) + parseInt( this.data[ order[order.length-1] ].length );
+
+        let s = criticalPath.max;
+
+        while(s !== undefined){
+            this.path.push(s);
+            s = predecessor[s];
+        }
       }
     },
   },

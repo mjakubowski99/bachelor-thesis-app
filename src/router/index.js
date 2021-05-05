@@ -11,6 +11,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import TrainScheduling from "../views/TrainScheduling";
 import IntervalGraphColoringVisual from "../views/IntervalGraphColoringVisual";
 import CriticalPath from "../views/CriticalPath";
+import JobAssignmentComponent from "../views/JobAssignmentComponent";
 
 
 // Make BootstrapVue available throughout your project
@@ -48,6 +49,11 @@ const routes = [
     name: 'CriticalPath',
     component: CriticalPath,
   },
+  {
+    path: '/jobAssignment',
+    name: 'JobAssignmentComponent',
+    component: JobAssignmentComponent
+  }
 ]
 
 const router = new VueRouter({

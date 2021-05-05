@@ -9,26 +9,26 @@
           <p></p>
         </div>
 
-    <div class="card ml-auto mr-auto border-0" style="width: 95%;">
-      <div class="card-header text-center text-light h3" style="background-color: black;">
-        Wizualizacja
-      </div>
-      <ul class="list-group list-group-flush bg-dark">
-        <cytoscape class="mt-5
-                          mb-5 h-75 ml-auto
-                          mr-auto cyto visual-color"
-            ref="cyRef"
-            :config="config"
-            :afterCreated="afterCreated"
-        >
-          <cy-element
-              v-for="def in elements"
-              :key="`${def.data.id}`"
-              :definition="def"
-              v-on:mousedown="deleteNode($event, def.data.id)"
-          />
-        </cytoscape>
-      </ul>
+      <div class="card ml-auto mr-auto border-0" style="width: 95%;">
+          <div class="card-header text-center text-light h3" style="background-color: black;">
+            Wizualizacja
+          </div>
+          <ul class="list-group list-group-flush bg-dark">
+            <cytoscape class="mt-5
+                              mb-5 h-75 ml-auto
+                              mr-auto cyto visual-color"
+                ref="cyRef"
+                :config="config"
+                :afterCreated="afterCreated"
+            >
+              <cy-element
+                  v-for="def in elements"
+                  :key="`${def.data.id}`"
+                  :definition="def"
+                  v-on:mousedown="deleteNode($event, def.data.id)"
+              />
+            </cytoscape>
+          </ul>
       </div>
     </div>
 </template>
@@ -84,35 +84,41 @@ export default {
   created() {
       this.coloring();
       console.log(this.graph)
-      for(let i=0; i<this.graph.length; i++){
-          if( this.graph[i] !== undefined && this.graph[i].neighbours.length !== 0 ){
-              this.elements.push(
-                  {
-                    data: { id: this.graph[i].v },
-                    position: { x: this.getRandomInt(100,500), y: this.getRandomInt(100,500) },
-                    group: "nodes"
-                  },
-              );
-          }
-      }
+      this.positioning();
 
-    let h = 0;
-    for(let i=0; i<this.graph.length; i++) {
-      if (this.graph[i] !== undefined) {
-        for (let j = 0; j < this.graph[i].neighbours.length; j++) {
-          this.elements.push(
-              {
-                data: {id: 'edge-'+h, source: this.graph[i].v, target: this.graph[i].neighbours[j]},
-                group: "edges"
-              }
-          );
-          h++;
+      let h = 0;
+      for(let i=0; i<this.graph.length; i++) {
+        if (this.graph[i] !== undefined) {
+          for (let j = 0; j < this.graph[i].neighbours.length; j++) {
+            this.elements.push(
+                {
+                  data: {id: 'edge-'+h, source: this.graph[i].v, target: this.graph[i].neighbours[j]},
+                  group: "edges"
+                }
+            );
+            h++;
+          }
         }
       }
-    }
 
   },
   methods: {
+
+    positioning(){
+
+      for(let i=0; i<this.graph.length; i++){
+        if( this.graph[i] !== undefined && this.graph[i].neighbours.length !== 0 ){
+
+          this.elements.push(
+              {
+                data: { id: this.graph[i].v },
+                position: { x: this.getRandomInt(0,1350), y: this.getRandomInt(0,550) },
+                group: "nodes"
+              },
+          );
+        }
+      }
+    },
     afterCreated(cy) {
       let inc = 1;
       for(let i=0; i<this.intervalColoring.length; i++){

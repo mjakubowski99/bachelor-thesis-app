@@ -1,4 +1,3 @@
-
 let dummy = 0;
 const INFINITY = Number.MAX_SAFE_INTEGER;
 
@@ -7,7 +6,7 @@ export class HopcroftKarp{
     constructor(A,B){
 
         this.A = A;
-        this.B = B; 
+        this.B = B;
         this.matchedToA = new Array(this.A.length).fill(dummy);
         this.matchedToB = new Array(this.B.length).fill(dummy);
         this.distances = new Array(this.A.length).fill(dummy);
@@ -62,8 +61,9 @@ export class HopcroftKarp{
     BFS(){
         let queue = this.initQueue()
         let q_index = 0;
+        let val = true;
 
-        while( true ){
+        while( val === true ){
             let a = queue[q_index];
             if( a === undefined )
                 break;

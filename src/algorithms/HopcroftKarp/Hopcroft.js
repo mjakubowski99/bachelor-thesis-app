@@ -11,6 +11,7 @@ export class HopcroftKarp{
         this.matchedToB = new Array(this.B.length).fill(dummy);
         this.distances = new Array(this.A.length).fill(dummy);
         this.matching = [];
+        this.matchingSize = 0;
 
     }
 
@@ -27,13 +28,9 @@ export class HopcroftKarp{
                     matching+=1;
             }
         }
+        this.matchingSize = matching;
 
-        console.log(matching);
-        /*console.log('Edges in matching: ');
-        for(let i=0; i<this.matchedToA.length; i++){
-            if( this.matchedToA[i] !== undefined && this.matchedToA[i] !== dummy )
-                console.log('(', i, ',', this.matchedToA[i], ')');
-        }*/
+        return this.matchedToA;
     }
 
     initQueue(){

@@ -3,10 +3,12 @@
       <button @click="criticalPath" class="btn btn-danger">
           Wyznacz ścieżkę
       </button>
-        <div class="list-group-item mt-3 mb-3 w-50 ml-auto mr-auto">
-            <div v-for="vertex in path.slice().reverse()" :key="vertex">
-                {{ vertex }}
-            </div>
+        <div v-if="path.length !== 0">
+          <div class="list-group-item mt-3 mb-3 w-50 ml-auto mr-auto">
+              <div v-for="vertex in path.slice().reverse()" :key="vertex">
+                  {{ vertex }}
+              </div>
+          </div>
         </div>
     </div>
 </template>
@@ -25,6 +27,8 @@ export default {
   },
   methods: {
     criticalPath(){
+      this.path = [];
+
       let graph = new Graph(this.data.length+1)
       for(let x of this.matching)
         graph.addEdge(x[0], x[1], parseInt(this.data[x[0]].length));
@@ -51,6 +55,8 @@ export default {
             s = predecessor[s];
         }
       }
+
+      console.log(this.data);
     },
   },
 }

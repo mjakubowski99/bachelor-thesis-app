@@ -2,12 +2,15 @@ import {Node} from './Node.js'
 
 export class Graph{
 
-    constructor(V){
-        this.A = new Array(V+1);
-        this.B = new Array(V+1);
+    constructor(V1, V2){
+        this.A = new Array(V1+1);
+        this.B = new Array(V2+1);
     }
 
     addEdge(a,b){
+        a=a+1;
+        b=b+1;
+
         if( this.A[a] === undefined )
             this.A[a] = new Node(a);
         if( this.B[b] === undefined )

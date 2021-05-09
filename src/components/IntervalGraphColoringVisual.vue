@@ -17,13 +17,14 @@
 </template>
 
 <script>
-import NavbarComponent from "../components/NavbarComponent";
-import {GraphCreator} from '../algorithms/IntervalColoring/GraphCreator.js'
+
 import {LexBfs} from '../algorithms/IntervalColoring/LexBfs.js'
 import {IntervalGraphColoring} from '../algorithms/IntervalColoring/IntervalGraphColoring.js'
+
+
 export default {
   name: "IntervalGraphColoringVisual.vue",
-  components: {NavbarComponent},
+  props: ['creator'],
   data() {
     return {
       colors: [
@@ -63,7 +64,6 @@ export default {
   },
   created() {
     this.coloring();
-    console.log(this.graph)
     this.positioning();
     let h = 0;
     for(let i=0; i<this.graph.length; i++) {
@@ -83,7 +83,7 @@ export default {
   methods: {
     positioning(){
       for(let i=0; i<this.graph.length; i++){
-        if( this.graph[i] !== undefined && this.graph[i].neighbours.length !== 0 ){
+        if( this.graph[i] !== undefined ){
           this.elements.push(
               {
                 data: { id: this.graph[i].v },
@@ -96,6 +96,7 @@ export default {
     },
     afterCreated(cy) {
       let inc = 1;
+      cy.userZoomingEnabled( false );
       for(let i=0; i<this.intervalColoring.length; i++){
         if( this.intervalColoring[i] !== -1 ){
           setTimeout( () => {
@@ -109,19 +110,7 @@ export default {
       }
     },
     coloring(){
-      const creator = new GraphCreator(21);
-      creator.addEdge(1,2);
-      creator.addEdge(1,3);
-      creator.addEdge(3,4);
-      creator.addEdge(2,3);
-      creator.addEdge(1,3);
-      creator.addEdge(2,4);
-      creator.addEdge(4,7);
-      creator.addEdge(4,6);
-      creator.addEdge(6,7);
-      creator.addEdge(5,6);
-      creator.addEdge(5,7);
-      this.graph = creator.getGraph;
+      this.graph = this.creator.getGraph;
       const lexBfs = new LexBfs(this.graph);
       let order = lexBfs.doLexBfs();
       let color = new IntervalGraphColoring(this.graph);
@@ -144,9 +133,7 @@ export default {
       background: linear-gradient(to right, #ad5389, #3c1053); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
     .visual-color{
-      background: #141E30;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background-color: #f2f2f2;
     }
     .cyto{
       width: 95%;

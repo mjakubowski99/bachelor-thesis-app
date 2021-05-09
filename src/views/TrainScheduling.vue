@@ -4,8 +4,19 @@
     <jumbotron-component
       header="Train Scheduler"
       lead="W tym panelu możesz rozplanować minimalne uzycie pociągów"
-      footer="Tu będzie jakiś lepszy opis"
+      footer="Klikając przycisk dodaj godzinę odjazdu generuje się wiersz w tabeli
+        do którego można podać datę początku i końca realizowanego połączenia. Po podaniu
+        wszystkich interesujących nas godzin połączeń klikamy przycisk wygeneruj rozkład, który
+        zwraca nam rozkład wykorzystujący minimalną liczbę pociągów.
+      "
     />
+
+    <div v-if="generated">
+      <button @click="startGenerator" class="btn btn-dark"> Wizualizacja zadanego grafu </button>
+      <div v-if="clicked">
+        <interval-graph-coloring-visual :creator="generateGraph()"> </interval-graph-coloring-visual>
+      </div>
+    </div>
     <schedule-table-component v-on:get-schedule="doSchedule"/>
 
     <div class="d-flex justify-content-center text-light mb-5" v-if="dates.length !== 0">
@@ -16,6 +27,7 @@
         <card-component v-bind:dates="item" ></card-component>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -28,10 +40,11 @@ import CardComponent from "../components/CardComponent";
 import {GraphCreator} from '../algorithms/IntervalColoring/GraphCreator.js'
 import {LexBfs} from '../algorithms/IntervalColoring/LexBfs.js'
 import {IntervalGraphColoring} from '../algorithms/IntervalColoring/IntervalGraphColoring.js'
+import IntervalGraphColoringVisual from "../components/IntervalGraphColoringVisual";
 
 export default {
   name: "TrainScheduling",
-  components: {CardComponent, JumbotronComponent, NavbarComponent, ScheduleTableComponent},
+  components: {CardComponent, JumbotronComponent, NavbarComponent, ScheduleTableComponent, IntervalGraphColoringVisual},
 
   data() {
     return {
@@ -39,6 +52,9 @@ export default {
       info: '',
       coloring: [],
       dates: [],
+      creator: null,
+      generated: false,
+      clicked: false,
     }
   },
   methods: {
@@ -62,6 +78,8 @@ export default {
           }
       }
 
+      this.creator = creator;
+
       return creator.getGraph;
     },
 
@@ -78,6 +96,11 @@ export default {
         this.dates = new Array(color.maxColor+1);
         this.coloring = coloring;
         this.prepareResult();
+        this.generated = true;
+        this.clicked = false;
+      }
+      else{
+        this.generated = false;
       }
     },
 
@@ -95,6 +118,17 @@ export default {
             }
         }
         console.log( this.dates )
+    },
+
+    generateGraph(){
+      return this.creator;
+    },
+
+    startGenerator(){
+        if( this.generated )
+          this.clicked = true;
+        else
+          alert("Musisz najpierw wygenerować poprawny graf")
     },
 
     toSeconds(time){

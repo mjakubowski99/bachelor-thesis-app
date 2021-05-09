@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+
+
 import ProjectDescription from '../views/ProjectDescription.vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import VueCytoscape from 'vue-cytoscape'
@@ -9,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import TrainScheduling from "../views/TrainScheduling";
-import IntervalGraphColoringVisual from "../views/IntervalGraphColoringVisual";
+import IntervalColoring from "../views/IntervalColoring";
 import CriticalPath from "../views/CriticalPath";
 import JobAssignmentComponent from "../views/JobAssignmentComponent";
 
@@ -26,11 +27,6 @@ Vue.use(VueCytoscape);
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/projectDescription',
     name: 'ProjectDescription',
     component: ProjectDescription
   },
@@ -41,8 +37,8 @@ const routes = [
   },
   {
     path: '/intervalColoring',
-    name: 'IntervalColoringVisual',
-    component: IntervalGraphColoringVisual
+    name: 'IntervalColoring',
+    component: IntervalColoring
   },
   {
     path: '/criticalPath',

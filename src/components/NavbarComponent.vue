@@ -1,6 +1,6 @@
 <template>
     <b-navbar toggleable="lg" type="dark" class="navbar bg-dark">
-        <router-link to="/projectDescription" class="h4 ml-5 mr-5 router-link text-light">Scheduling App</router-link>
+        <router-link to="/" class="h4 ml-5 mr-5 text-light">Scheduling App</router-link>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

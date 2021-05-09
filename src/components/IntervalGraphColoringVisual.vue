@@ -11,7 +11,6 @@
           v-for="def in elements"
           :key="`${def.data.id}`"
           :definition="def"
-          v-on:mousedown="deleteNode($event, def.data.id)"
       />
     </cytoscape>
 </template>
@@ -27,14 +26,7 @@ export default {
   props: ['creator'],
   data() {
     return {
-      colors: [
-        'red',
-        'green',
-        'blue',
-        'yellow',
-        'green',
-        'orange'
-      ],
+      colors: [],
       config: {
         style: [
           {
@@ -63,6 +55,13 @@ export default {
     };
   },
   created() {
+    let colorsSize = this.creator.getGraph.length;
+    let i=0;
+    while(i<colorsSize) {
+      this.genRandomColors();
+      i++;
+    }
+
     this.coloring();
     this.positioning();
     let h = 0;
@@ -81,6 +80,22 @@ export default {
     }
   },
   methods: {
+    genRandomColors(){
+      let randomColor = Math.floor(Math.random()*16777215).toString(16);
+
+      let counter = 0;
+      while( this.colors.includes(randomColor) ){
+          randomColor = Math.floor(Math.random()*16777215).toString(16);
+          if( counter === 1000 ){
+            alert('Nie można wygenerować tylu kolorów');
+            return;
+          }
+          counter++;
+      }
+
+      this.colors.push(randomColor);
+
+    },
     positioning(){
       for(let i=0; i<this.graph.length; i++){
         if( this.graph[i] !== undefined ){
@@ -102,7 +117,7 @@ export default {
           setTimeout( () => {
             cy.style()
                 .selector('#'+String(i) )
-                .style('background-color', this.colors[ this.intervalColoring[i] ] )
+                .style('background-color', '#'+this.colors[ this.intervalColoring[i] ] )
                 .update()
           }, 1000*inc, cy);
           inc++;

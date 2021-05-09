@@ -11,12 +11,16 @@
       "
     />
 
-    <div v-if="generated">
+    <div v-if="generated" class="text-center mb-2">
       <button @click="startGenerator" class="btn btn-dark"> Wizualizacja zadanego grafu </button>
+    </div>
+
+    <div v-if="generated">
       <div v-if="clicked">
         <interval-graph-coloring-visual :creator="generateGraph()"> </interval-graph-coloring-visual>
       </div>
     </div>
+
     <schedule-table-component v-on:get-schedule="doSchedule"/>
 
     <div class="d-flex justify-content-center text-light mb-5" v-if="dates.length !== 0">

@@ -73,7 +73,7 @@ export class CriticalPath{
             }
         }
         this.max = max_index;
-        console.log(predecessor);
+
         return predecessor;
     }
 }

@@ -269,5 +269,79 @@ test( 'Check minimal coloring 8', () => {
     expect( test8() ).toBe( bruteForceOutput(graph, order) );
 })
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+let count_edges = 0;
+function buildGraph() {
+    let size = 2000;
+    const creator = new GraphCreator(size + 1);
+
+    let schedule = [];
+    for(let i=0; i<size; i++){
+        let s = getRandomInt(0, 1140);
+        let e = getRandomInt(0, 1140);
+        while( s === e ){
+            s = getRandomInt(0, 1140);
+        }
+
+        if( s > e ){
+            let swap = s;
+            s = e;
+            e = swap;
+        }
+
+        schedule.push({
+            start: s,
+            end: e
+        })
+    }
+
+    for (let i = 0; i < size; i++) {
+        for (let j = i + 1; j < size; j++) {
+            let s1 = schedule[i].start;
+            let s2 = schedule[j].start;
+
+            let e1 = schedule[i].end;
+            let e2 = schedule[j].end;
+
+            if ((s1 >= s2 && s1 <= e2) || (s2 >= s1 && s2 <= e1)){
+                creator.addEdge(i, j);
+                count_edges++;
+            }
+
+        }
+    }
+
+    return creator.getGraph;
+}
+
+let graph = buildGraph()
+let globalOrder = null;
+
+test( 'LexBfsPerformance', () => {
+
+    const lexBfs = new LexBfs(graph);
+    let order = lexBfs.doLexBfs();
+
+    globalOrder = order;
+
+    let endDate   = new Date();
+
+    expect(1).toBe(1);
+
+});
+
+test('Random test performance', () =>
+{
+    let color = new IntervalGraphColoring(graph);
+    color.coloring(globalOrder);
+
+    expect(1).toBe(1);
+})
+
 
 

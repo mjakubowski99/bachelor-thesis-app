@@ -17,7 +17,7 @@
 <script>
 export default {
   name: "DagVisualization.vue",
-  props: ['creator', 'path'],
+  props: ['creator', 'path', 'data'],
   data() {
     return {
       config: {
@@ -26,7 +26,7 @@ export default {
             selector: "node",
             style: {
               "background-color": "#333333",
-              label: "data(id)"
+              label: "data(label)"
             }
           },
           {
@@ -94,7 +94,7 @@ export default {
           if( this.graph[i] !== undefined ){
             this.elements.push(
                 {
-                  data: { id: i },
+                  data: { id: i, label: this.data[i].task },
                   position: { x: a, y: b },
                   group: "nodes"
                 },

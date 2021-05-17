@@ -1,18 +1,32 @@
 <template>
     <div>
-      <div v-if="prepared">
-        <button @click="rendered = !rendered" class="btn btn-primary"> Wizualizacja </button>
-        <dag-visualization v-if="rendered" :creator="graph" :path="path"> </dag-visualization>
+      <div v-if="prepared" class="mt-2">
+        <div class="text-center mt-4">
+          <button @click="rendered = !rendered" class="btn btn-primary">
+            {{ rendered ? 'Zamknij wizualizacje'  : 'Wizualizacja' }}
+          </button>
+        </div>
+
+        <div class="mt-3 ml-auto mr-auto" style="border: 1px solid #e6e6e6; width: 90%">
+          <dag-visualization v-if="rendered" :creator="graph" :data="data" :path="path"> </dag-visualization>
+        </div>
       </div>
       <div class="text-center mt-3">
 
         <button @click="criticalPath" class="btn btn-danger">
           Wyznacz ścieżkę
         </button>
-        <div v-if="path.length !== 0">
-          <div class="list-group-item mt-3 mb-3 w-50 ml-auto mr-auto">
-            <div v-for="vertex in path.slice().reverse()" :key="vertex">
-              {{ vertex }}
+        <div v-if="path.length !== 0" >
+          <div class="h1 ml-auto mr-auto text-center rounded bg-dark text-light w-50 mt-3">
+            Najdłuższa ścieżka
+          </div>
+
+          <div class="mt-3 mb-3 w-50 ml-auto mr-auto">
+            <div v-for="vertex in reverse()" :key="vertex" class="list-group-item">
+              {{ data[vertex].task }} -> Długość trwania: {{ data[vertex].length }}
+            </div>
+            <div class="list-group-item">
+              Długość sumaryczna ścieżki: {{  length }}
             </div>
           </div>
         </div>
@@ -33,6 +47,7 @@ export default {
     return{
       graph: null,
       path: [],
+      length: null,
       prepared: false,
       rendered: false,
     }
@@ -65,6 +80,9 @@ export default {
         let predecessor = criticalPath.criticalPath(graph, order);
 
         let s = criticalPath.max;
+        this.length = criticalPath.distance + parseInt( this.data[ this.data.length -1 ].length )
+
+
 
         while(s !== undefined){
             this.path.push(s);
@@ -74,6 +92,10 @@ export default {
         this.prepared = true;
       }
     },
+    reverse(){
+      let toRev = this.path
+      return toRev.slice().reverse();
+    }
   },
 }
 </script>

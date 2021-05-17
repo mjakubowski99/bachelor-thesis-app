@@ -2,6 +2,21 @@
   <div>
       <div class="bg-violet pb-5">
           <navbar-component> </navbar-component>
+          <jumbotron-component
+              class="bg-white text-dark"
+              header="Wyznaczanie ścieżki krytycznej"
+
+              lead="W tym panelu można dodać zadania oraz zależności, w których definiuje się, które zadanie ma być przed
+              którym"
+
+              footer="Podaj zadanie oraz długość jego trwania w godzinach. Po kliknięciu przycisku dodawania
+              zadanie pojawi się po prawej stronie od formularza dodawania zadań. Jeśli na liście znajdują się
+              co najmniej dwa zadania to można kliknąć najpierw jedno, a potem drugie. Tworzy się wtedy zależność, w
+              której pierwsze kliknięte zadanie musi być przed drugim. Po stworzeniu zależności możesz kliknąć przycisk
+              wyznaczania ścieżki. Po wygenerowaniu odpowiedzi pojawia się przycisk wizualizacji, dzięki któremu możesz
+              wyświetlić graf wygenerowany dla podanych danych"
+
+          > </jumbotron-component>
           <div class="text-light bg-white mt-5 w-75 ml-auto mr-auto rounded">
               <br>
               <div class="mt-2 border-bottom border-muted h2 text-dark text-center"> Plan Project </div>
@@ -35,7 +50,9 @@
           </div>
       </div>
 
-    <div class="h1 ml-auto mr-auto text-center rounded bg-dark text-light w-50 mt-3">
+    <critical-path-algorithm-component :data="items" :matching="matchings"> </critical-path-algorithm-component>
+
+    <div class="h1 ml-auto mr-auto text-center rounded bg-dark text-light w-50 mt-3 mb-3">
       Zaleznosci między zadaniami
     </div>
 
@@ -47,8 +64,6 @@
             <div class="btn btn-outline-primary ml-3">{{ items[item[1]].task}}</div>
       </div>
     </div>
-
-    <critical-path-algorithm-component :data="items" :matching="matchings"> </critical-path-algorithm-component>
   </div>
 </template>
 
@@ -61,10 +76,11 @@ import NavbarComponent from "../components/NavbarComponent";
 import DeleteIcon from "../components/Icons/DeleteIcon";
 import ArrowIcon from "../components/Icons/ArrowIcon";
 import CriticalPathAlgorithmComponent from "../components/CriticalPathAlgorithmComponent";
+import JumbotronComponent from "../components/JumbotronComponent"
 
 export default {
   name: "CriticalPath",
-  components: {CriticalPathAlgorithmComponent, ArrowIcon, DeleteIcon, NavbarComponent},
+  components: {JumbotronComponent, CriticalPathAlgorithmComponent, ArrowIcon, DeleteIcon, NavbarComponent},
   data(){
     return{
       items: [],

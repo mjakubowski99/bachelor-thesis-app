@@ -94,7 +94,7 @@ export default {
           if( this.graph[i] !== undefined ){
             this.elements.push(
                 {
-                  data: { id: i, label: this.data[i].task },
+                  data: { id: i, label: i !== this.data.length ? this.data[i].task : 'dummy' },
                   position: { x: a, y: b },
                   group: "nodes"
                 },

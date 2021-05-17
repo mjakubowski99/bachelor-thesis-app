@@ -50,8 +50,6 @@
           </div>
       </div>
 
-    <critical-path-algorithm-component :data="items" :matching="matchings"> </critical-path-algorithm-component>
-
     <div class="h1 ml-auto mr-auto text-center rounded bg-dark text-light w-50 mt-3 mb-3">
       Zaleznosci między zadaniami
     </div>
@@ -64,6 +62,8 @@
             <div class="btn btn-outline-primary ml-3">{{ items[item[1]].task}}</div>
       </div>
     </div>
+
+    <critical-path-algorithm-component :data="items" :matching="matchings"> </critical-path-algorithm-component>
   </div>
 </template>
 

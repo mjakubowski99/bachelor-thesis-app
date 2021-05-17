@@ -124,6 +124,7 @@ export default {
         }
       }
     },
+
     coloring(){
       this.graph = this.creator.getGraph;
       const lexBfs = new LexBfs(this.graph);
@@ -132,6 +133,7 @@ export default {
       let intervalColoring = color.coloring(order);
       this.intervalColoring = intervalColoring;
     },
+
     getRandomInt(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);

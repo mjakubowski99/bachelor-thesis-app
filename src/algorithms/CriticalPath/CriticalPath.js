@@ -2,6 +2,7 @@ export class CriticalPath{
 
     constructor() {
         this.max = -1;
+        this.distance = 0;
     }
 
 
@@ -73,8 +74,14 @@ export class CriticalPath{
             }
         }
         this.max = max_index;
+        this.distance = max;
+
 
         return predecessor;
+    }
+
+    getLongestPathValue(){
+        return this.distance;
     }
 }
 

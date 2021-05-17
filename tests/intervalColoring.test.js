@@ -2,37 +2,6 @@ import {GraphCreator} from "../src/algorithms/IntervalColoring/GraphCreator.js";
 import {IntervalGraphColoring} from "../src/algorithms/IntervalColoring/IntervalGraphColoring.js";
 import {LexBfs} from "../src/algorithms/IntervalColoring/LexBfs";
 
-function permutate(values, permutations = [], end) {
-    if (end === 1)
-        permutations.push(values.slice(0))
-
-    for (let i = 0; i < end; i++) {
-        permutate(values, permutations, end - 1)
-        if( end % 2 )
-            [values[0], values[end - 1]] = [values[end - 1], values[0]]
-        else
-            [values[i], values[end - 1]] = [values[end - 1], values[i]]
-    }
-
-    return permutations;
-}
-
-function bruteForceOutput(graph, order){
-    let combinations = permutate(order, [], 5 );
-    let color = new IntervalGraphColoring(graph);
-
-    let min = 1000000;
-
-    for(let x of combinations){
-        let color = new IntervalGraphColoring(graph);
-        for(let y of x)
-            color.assignMinFreeColor(y);
-        if( min > color.maxColor )
-            min = color.maxColor;
-    }
-
-    return min;
-}
 
 
 function getColoring(graph){
@@ -217,8 +186,6 @@ function test8(){
     return color.maxColor;
 }
 
-
-
 test('Basic coloring example', () =>{
     expect( test1() ).toEqual([-1, 0, 1, 1, 0]); //array of color -1 mean vertex not added
 });
@@ -239,7 +206,7 @@ test( 'Coloring graph with many components second variant', () => {
     expect( test5() ).toEqual( [-1, 0, 1, 0, 0, 1, 2, 1, 0, 0, 1] );
 });
 
-test( 'Check minimal coloring', () => {
+/*test( 'Check minimal coloring', () => {
     let creator = createGraphForTest6();
     let graph = creator.getGraph;
 
@@ -269,79 +236,27 @@ test( 'Check minimal coloring 8', () => {
     expect( test8() ).toBe( bruteForceOutput(graph, order) );
 })
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-}
+ */
 
-let count_edges = 0;
-function buildGraph() {
-    let size = 2000;
-    const creator = new GraphCreator(size + 1);
 
-    let schedule = [];
-    for(let i=0; i<size; i++){
-        let s = getRandomInt(0, 1140);
-        let e = getRandomInt(0, 1140);
-        while( s === e ){
-            s = getRandomInt(0, 1140);
-        }
+/*test( 'LexBfsPerformance', () => {
 
-        if( s > e ){
-            let swap = s;
-            s = e;
-            e = swap;
-        }
-
-        schedule.push({
-            start: s,
-            end: e
-        })
-    }
-
-    for (let i = 0; i < size; i++) {
-        for (let j = i + 1; j < size; j++) {
-            let s1 = schedule[i].start;
-            let s2 = schedule[j].start;
-
-            let e1 = schedule[i].end;
-            let e2 = schedule[j].end;
-
-            if ((s1 >= s2 && s1 <= e2) || (s2 >= s1 && s2 <= e1)){
-                creator.addEdge(i, j);
-                count_edges++;
-            }
-
-        }
-    }
-
-    return creator.getGraph;
-}
-
-let graph = buildGraph()
-let globalOrder = null;
-
-test( 'LexBfsPerformance', () => {
-
+    let graph = buildGraph(1000, 11640)
     const lexBfs = new LexBfs(graph);
     let order = lexBfs.doLexBfs();
-
     globalOrder = order;
-
-    let endDate   = new Date();
 
     expect(1).toBe(1);
 
 });
 
-test('Random test performance', () =>
+test('Coloring test performance', () =>
 {
     let color = new IntervalGraphColoring(graph);
     color.coloring(globalOrder);
 
     expect(1).toBe(1);
-})
+}) */
 
 
 

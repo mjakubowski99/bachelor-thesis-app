@@ -9,15 +9,32 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="item in items" v-bind:key="item.number">
+      <tr v-for="(item, index) in items" v-bind:key="index">
         <td>
-          {{ item.number }}
+          <button v-on:click="deleteSchedule(index)" class="btn btn-danger" :id="'delete-'+index">
+            <delete-icon> </delete-icon>
+          </button>
+          {{ index + 1 }}
         </td>
         <td>
-          <b-form-timepicker class="w-50 mx-auto" v-model="item.start" locale="pl"></b-form-timepicker>
+          <b-input-group class="mb-3 d-flex flex-row">
+              <b-form-input
+                  type="text"
+                  id="date-input"
+                  v-model="item.start"
+                  placeholder="HH:MM"
+              ></b-form-input>
+          </b-input-group>
         </td>
         <td>
-          <b-form-timepicker class="w-50 mx-auto" v-model="item.end" locale="pl"></b-form-timepicker>
+          <b-input-group class="mb-3 d-flex flex-row">
+            <b-form-input
+                type="text"
+                id="date-input"
+                v-model="item.end"
+                placeholder="HH:MM"
+            ></b-form-input>
+          </b-input-group>
         </td>
       </tr>
       </tbody>
@@ -31,8 +48,11 @@
 
 <script>
 
+import DeleteIcon from "./Icons/DeleteIcon";
+
 export default {
   name: "ScheduleTableComponent",
+  components: {DeleteIcon},
   data(){
       return {
         items: [],
@@ -45,16 +65,17 @@ export default {
     addItem(){
       this.items.push(
           {
-            number: this.counter,
             start: '',
             end: '',
           }
       );
-      this.counter++;
       this.scrollToDown();
     },
     scrollToDown(){
       this.$el.scrollIntoView(false);
+    },
+    deleteSchedule(index){
+      this.items.splice(index, 1);
     }
   },
 }

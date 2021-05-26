@@ -7,7 +7,6 @@
         <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
                 <router-link to="/trainScheduling" class="router-link text-light ml-5">Problem rozplanowania pociągów</router-link>
-                <router-link to="/intervalColoring" class="router-link text-light ml-5">Problem rozplanowania zajęć</router-link>
                 <router-link to="/criticalPath" class="router-link text-light ml-5">Ścieżka krytyczna</router-link>
                 <router-link to="/jobAssignment" class="router-link text-light ml-5">Maksymalne dopasowanie</router-link>
             </b-navbar-nav>

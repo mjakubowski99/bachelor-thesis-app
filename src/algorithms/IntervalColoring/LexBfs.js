@@ -67,8 +67,10 @@ export class LexBfs{
         this.sets = this.fillSetsAtStart();
         this.output = [];
         let v = this.sets[0].set[0];
-        if( v === undefined )
+        if( v === undefined ) {
             console.log('Blad we wczytaniu');
+            return [];
+        }
 
 
         while( this.sets.length ){

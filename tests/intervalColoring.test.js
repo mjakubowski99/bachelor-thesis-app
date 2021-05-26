@@ -2,6 +2,20 @@ import {GraphCreator} from "../src/algorithms/IntervalColoring/GraphCreator.js";
 import {IntervalGraphColoring} from "../src/algorithms/IntervalColoring/IntervalGraphColoring.js";
 import {LexBfs} from "../src/algorithms/IntervalColoring/LexBfs";
 
+function permutate(values, permutations = [], end) {
+    if (end === 1)
+        permutations.push(values.slice(0))
+
+    for (let i = 0; i < end; i++) {
+        permutate(values, permutations, end - 1)
+        if( end % 2 )
+            [values[0], values[end - 1]] = [values[end - 1], values[0]]
+        else
+            [values[i], values[end - 1]] = [values[end - 1], values[i]]
+    }
+
+    return permutations;
+}
 
 
 function getColoring(graph){
@@ -10,6 +24,33 @@ function getColoring(graph){
     let color = new IntervalGraphColoring(graph);
 
     return color.coloring(order);
+}
+
+function getMinColoring(graph){
+    const lexBfs = new LexBfs(graph);
+    let order = lexBfs.doLexBfs();
+    let color = new IntervalGraphColoring(graph);
+
+    color.coloring(order);
+
+    return color.maxColor;
+}
+
+function bruteForceOutput(graph, order, end){
+    let combinations = permutate(order, [], end );
+    let color = new IntervalGraphColoring(graph);
+
+    let min = 1000000;
+
+    for(let x of combinations){
+        let color = new IntervalGraphColoring(graph);
+        for(let y of x)
+            color.assignMinFreeColor(y);
+        if( min > color.maxColor )
+            min = color.maxColor;
+    }
+
+    return min;
 }
 
 function test1(){
@@ -206,37 +247,88 @@ test( 'Coloring graph with many components second variant', () => {
     expect( test5() ).toEqual( [-1, 0, 1, 0, 0, 1, 2, 1, 0, 0, 1] );
 });
 
-/*test( 'Check minimal coloring', () => {
-    let creator = createGraphForTest6();
-    let graph = creator.getGraph;
+test( 'Check minimal coloring', () => {
+    const creator = new GraphCreator(5);
+    creator.addEdge(1,2);
+    creator.addEdge(1,3);
+    creator.addEdge(3,4);
+    const graph = creator.getGraph;
 
     const lexBfs = new LexBfs(graph);
     let order = lexBfs.doLexBfs();
 
-    expect( test6() ).toBe( bruteForceOutput(graph, order) );
-})
+    expect( getMinColoring(graph) ).toBe( bruteForceOutput(graph, order, order.length) );
+});
 
 test( 'Check minimal coloring 2', () => {
-    let creator = createGraphForTest7();
-    let graph = creator.getGraph;
+    const creator = new GraphCreator(11);
+
+    creator.addEdge(1,2);
+    creator.addEdge(1,5);
+    creator.addEdge(1,4);
+    creator.addEdge(1,6);
+    creator.addEdge(1,7);
+    creator.addEdge(1, 9);
+    creator.addEdge(1,10);
+    creator.addEdge(2,4);
+    creator.addEdge(2,3);
+    creator.addEdge(2,5);
+    creator.addEdge(2,6);
+    creator.addEdge(2,7);
+    creator.addEdge(2,8);
+    creator.addEdge(2,9);
+    creator.addEdge(2,10);
+    creator.addEdge(3,7);
+    creator.addEdge(3,10);
+    creator.addEdge(4,5);
+    creator.addEdge(4,6);
+    creator.addEdge(4,7);
+    creator.addEdge(4,9);
+    creator.addEdge(4,10);
+    creator.addEdge(5,6);
+    creator.addEdge(5,7);
+    creator.addEdge(5,9);
+    creator.addEdge(5,10);
+    creator.addEdge(6,8);
+    creator.addEdge(6,7);
+    creator.addEdge(6,9);
+    creator.addEdge(6,10);
+    creator.addEdge(7,8);
+    creator.addEdge(7,9);
+    creator.addEdge(7,10);
+    creator.addEdge(8,9);
+    creator.addEdge(8,10);
+    creator.addEdge(9,10);
+
+
+    const graph = creator.getGraph;
 
     const lexBfs = new LexBfs(graph);
     let order = lexBfs.doLexBfs();
 
-    expect( test7() ).toBe( bruteForceOutput(graph, order) );
-})
+    expect( getMinColoring(graph) ).toBe( bruteForceOutput(graph, order, order.length) );
+});
 
-test( 'Check minimal coloring 8', () => {
-    let creator = createGraphForTest8();
-    let graph = creator.getGraph;
+test( 'Check minimal coloring 3', () => {
+    const creator = new GraphCreator(6);
+    creator.addEdge(1,2);
+    creator.addEdge(1,3);
+    creator.addEdge(1,4);
+    creator.addEdge(1,5);
+    creator.addEdge(2,3);
+    creator.addEdge(2,4);
+    creator.addEdge(2,5);
+    creator.addEdge(3,4);
+    creator.addEdge(3,5);
+    creator.addEdge(4,5);
+    const graph = creator.getGraph;
 
     const lexBfs = new LexBfs(graph);
     let order = lexBfs.doLexBfs();
 
-    expect( test8() ).toBe( bruteForceOutput(graph, order) );
-})
-
- */
+    console.log( getMinColoring(graph) );
+    expect( getMinColoring(graph) ).toBe( bruteForceOutput(graph, order, order.length) );
+});
 
 
 /*test( 'LexBfsPerformance', () => {

@@ -57,12 +57,15 @@ export default {
             let v = i;
             for (let j = 0; j < this.graph[i].neighbours.length; j++) {
                 let w = this.graph[i].neighbours[j];
-                this.elements.push(
-                    {
-                      data: {id: 'edge-'+v+'-'+w, source: v, target: this.graph[i].neighbours[j], weight: this.graph[i].weight[j] },
-                      group: "edges",
-                    }
-                );
+
+                if( this.data[w] !== undefined ){
+                  this.elements.push(
+                      {
+                        data: {id: 'edge-'+v+'-'+w, source: v, target: this.graph[i].neighbours[j], weight: this.graph[i].weight[j] },
+                        group: "edges",
+                      }
+                  );
+                }
             }
         }
     }
@@ -92,13 +95,15 @@ export default {
 
       for(let i=0; i<this.graph.length; i++){
           if( this.graph[i] !== undefined ){
-            this.elements.push(
-                {
-                  data: { id: i, label: i !== this.data.length ? this.data[i].task : 'dummy' },
-                  position: { x: a, y: b },
-                  group: "nodes"
-                },
-            );
+            if( this.data[i] !== undefined ){
+              this.elements.push(
+                  {
+                    data: { id: i, label: this.data[i].task },
+                    position: { x: a, y: b },
+                    group: "nodes"
+                  },
+              );
+            }
             position = this.calculatePosition(a,b)
             a = position[0];
             b = position[1];

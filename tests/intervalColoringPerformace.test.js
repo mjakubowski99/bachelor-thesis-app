@@ -53,20 +53,16 @@ function buildGraph(graphSize, intervalSize) {
     return creator.getGraph;
 }
 
-for(let i=0; i<10; i++){
-    test( 'Performance test', () => {
+test( 'Performance test', () => {
 
-        let graph = buildGraph(1000, 11640)
-        const lexBfs = new LexBfs(graph);
-        let order = lexBfs.doLexBfs();
-        let color = new IntervalGraphColoring(graph);
-        color.coloring(order);
+    let graph = buildGraph(2000, 3000)
+    const lexBfs = new LexBfs(graph);
+    let order = lexBfs.doLexBfs();
+    let color = new IntervalGraphColoring(graph);
+    color.coloring(order);
 
-        console.log(count_edges)
+    console.log(count_edges)
 
-        expect(1).toBe(1);
+    expect(1).toBe(1);
 
-    });
-
-    count_edges = 0;
-}
+});

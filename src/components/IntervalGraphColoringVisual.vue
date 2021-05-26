@@ -102,7 +102,7 @@ export default {
           this.elements.push(
               {
                 data: { id: this.graph[i].v },
-                position: { x: this.getRandomInt(0,1350), y: this.getRandomInt(0,550) },
+                position: { x: this.getRandomInt(0,1200), y: this.getRandomInt(0,500) },
                 group: "nodes"
               },
           );

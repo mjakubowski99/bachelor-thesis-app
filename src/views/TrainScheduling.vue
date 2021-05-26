@@ -67,6 +67,12 @@ export default {
       let size = this.schedule.length;
       const creator = new GraphCreator(size+1);
 
+      if( size == 1 ){
+          creator.checkIfVertexExistIfNotCreate(0);
+          this.creator = creator;
+          return creator.getGraph;
+      }
+
       for(let i=0; i<size; i++ ){
           for(let j=i+1; j<size; j++){
               creator.checkIfVertexExistIfNotCreate(i);
@@ -140,10 +146,25 @@ export default {
        return parseInt(arr[0], 10)*60 + parseInt(arr[1], 10);
     },
 
+    validTime(time){
+       return /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(time);
+    },
+
     validate(){
       for(let i=0; i<this.schedule.length; i++){
         if( this.schedule[i].start === '' || this.schedule[i].end === '') {
           alert( 'Wypelnij puste pola w linii numer: ' + (i+1) );
+          return false;
+        }
+
+        if( !this.validTime( this.schedule[i].start ) ){
+            this.schedule[i].start='';
+            alert('Wprowadz czas we właściwym formacie w linii numer: ' + (i+1) )
+            return false;
+        }
+        if( !this.validTime( this.schedule[i].end ) ){
+          this.schedule[i].end='';
+          alert('Wprowadz czas we właściwym formacie w linii numer: ' + (i+1) )
           return false;
         }
         if( this.toSeconds(this.schedule[i].start)  >= this.toSeconds(this.schedule[i].end) ) {

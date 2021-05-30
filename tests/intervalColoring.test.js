@@ -247,7 +247,30 @@ test( 'Coloring graph with many components second variant', () => {
     expect( test5() ).toEqual( [-1, 0, 1, 0, 0, 1, 2, 1, 0, 0, 1] );
 });
 
-test( 'Check minimal coloring', () => {
+test( 'Check minimal coloring 1', () => {
+    const creator = new GraphCreator(5);
+    creator.addEdge(0,1);
+    creator.addEdge(0,2);
+    creator.addEdge(1,2);
+    creator.addEdge(1,3);
+    creator.addEdge(3,4);
+    const graph = creator.getGraph;
+
+    expect( getMinColoring(graph) ).toBe( 2 );
+});
+
+test( 'Check minimal coloring 2', () => {
+    const creator = new GraphCreator(5);
+    creator.addEdge(0,1);
+    creator.addEdge(1,2);
+    creator.addEdge(0,3);
+    creator.addEdge(3,4);
+    const graph = creator.getGraph;
+
+    expect( getMinColoring(graph) ).toBe( 1 );
+});
+
+test( 'Check minimal coloring 3', () => {
     const creator = new GraphCreator(5);
     creator.addEdge(1,2);
     creator.addEdge(1,3);
@@ -260,7 +283,7 @@ test( 'Check minimal coloring', () => {
     expect( getMinColoring(graph) ).toBe( bruteForceOutput(graph, order, order.length) );
 });
 
-test( 'Check minimal coloring 2', () => {
+test( 'Check minimal coloring 4', () => {
     const creator = new GraphCreator(11);
 
     creator.addEdge(1,2);
@@ -309,7 +332,7 @@ test( 'Check minimal coloring 2', () => {
     expect( getMinColoring(graph) ).toBe( bruteForceOutput(graph, order, order.length) );
 });
 
-test( 'Check minimal coloring 3', () => {
+test( 'Check minimal coloring 5', () => {
     const creator = new GraphCreator(6);
     creator.addEdge(1,2);
     creator.addEdge(1,3);
@@ -326,29 +349,45 @@ test( 'Check minimal coloring 3', () => {
     const lexBfs = new LexBfs(graph);
     let order = lexBfs.doLexBfs();
 
-    console.log( getMinColoring(graph) );
     expect( getMinColoring(graph) ).toBe( bruteForceOutput(graph, order, order.length) );
 });
 
+test( 'Check minimal coloring for many components 1', () => {
+    const creator = new GraphCreator(14);
+    creator.addEdge(0,1);
+    creator.addEdge(1,2);
+    creator.addEdge(0,2);
+    creator.addEdge(3,4);
+    creator.addEdge(4,5);
+    creator.addEdge(3,5);
+    creator.addEdge(6,7);
+    creator.addEdge(8,9);
+    creator.addEdge(10,11);
+    creator.addEdge(11,12);
+    creator.addEdge(12,13);
+    creator.addEdge(10,13);
+    creator.addEdge(10,12);
 
-/*test( 'LexBfsPerformance', () => {
+    const graph = creator.getGraph;
 
-    let graph = buildGraph(1000, 11640)
     const lexBfs = new LexBfs(graph);
     let order = lexBfs.doLexBfs();
-    globalOrder = order;
 
-    expect(1).toBe(1);
+    expect( getMinColoring(graph) ).toBe( 2 );
+})
 
-});
+test( 'Check minimal coloring for many components 2', () => {
+    const creator = new GraphCreator(6);
+    creator.addEdge(0,1);
+    creator.addEdge(2,3);
+    creator.addEdge(4,5);
+    const graph = creator.getGraph;
 
-test('Coloring test performance', () =>
-{
-    let color = new IntervalGraphColoring(graph);
-    color.coloring(globalOrder);
+    const lexBfs = new LexBfs(graph);
+    let order = lexBfs.doLexBfs();
 
-    expect(1).toBe(1);
-}) */
+    expect( getMinColoring(graph) ).toBe( 1 );
+})
 
 
 

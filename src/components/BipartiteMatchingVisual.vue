@@ -96,7 +96,7 @@ export default {
       let inc = 1;
       for(let i=0; i<this.matching.length; i++){
         if( this.matching[i] !== undefined && this.matching[i] !== dummy ){
-          console.log('#edge-'+String(i)+'-'+String(this.matching[i]));
+          //console.log('#edge-'+String(i)+'-'+String(this.matching[i]));
           setTimeout( () => {
             cy.style()
                 .selector('#edge-'+String(i)+'-'+String(this.matching[i]) )

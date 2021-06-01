@@ -13,6 +13,8 @@ import TrainScheduling from "../views/TrainScheduling";
 import IntervalColoring from "../views/IntervalColoring";
 import CriticalPath from "../views/CriticalPath";
 import JobAssignmentComponent from "../views/JobAssignmentComponent";
+import IntervalGraphColoringPanel from "../views/IntervalGraphColoringPanel";
+import MatchingAlgorithmPanel from "../views/MatchingAlgorithmPanel";
 
 
 // Make BootstrapVue available throughout your project
@@ -39,6 +41,16 @@ const routes = [
     path: '/intervalColoring',
     name: 'IntervalColoring',
     component: IntervalColoring
+  },
+  {
+    path: '/intervalColoringVisual',
+    name: 'IntervalColoringVisual',
+    component: IntervalGraphColoringPanel
+  },
+  {
+    path: '/matchingVisual',
+    name: 'MatchingVisual',
+    component: MatchingAlgorithmPanel
   },
   {
     path: '/criticalPath',

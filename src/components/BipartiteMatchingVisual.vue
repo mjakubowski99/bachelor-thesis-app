@@ -59,7 +59,7 @@ export default {
           let w = this.A[i].neighbours[j];
           this.elements.push(
               {
-                data: {id: 'edge-'+v+'-'+w, source: this.A[i].vertex, target: this.A[i].neighbours[j] + this.A.length},
+                data: {id: 'edge-'+v+'-'+w, source: String(this.A[i].vertex)+'A', target: String(this.A[i].neighbours[j]) + 'B'},
                 group: "edges"
               }
           );
@@ -69,13 +69,13 @@ export default {
   },
   methods: {
 
-    position(array, y, size){
+    position(array, y, value){
       let counter = 0;
       for(let i=0; i<array.length; i++){
         if( array[i] !== undefined ){
           this.elements.push(
               {
-                data: { id: array[i].vertex + size},
+                data: { id: String(array[i].vertex)+value },
                 position: { x: 100*(counter+1) + 100, y: y },
                 group: "nodes"
               },
@@ -86,8 +86,8 @@ export default {
 
     },
     positioning(){
-        this.position(this.A, 100, 0);
-        this.position(this.B, 500, this.A.length);
+        this.position(this.A, 100, 'A');
+        this.position(this.B, 500, 'B');
     },
     afterCreated(cy) {
       cy.userZoomingEnabled( false );

@@ -39,8 +39,7 @@
 import NavbarComponent from '../components/NavbarComponent.vue'
 import DescriptionComponent from "../components/DescriptionComponent";
 
-//import {GraphCreator} from '../algorithms/IntervalColoring/GraphCreator.js'
-//import {LexBfs} from '../algorithms/IntervalColoring/LexBfs.js'
+//import {GraphCreator} from '../algorithms/IntervalColoring/GraphCreator.js''
 //import {IntervalGraphColoring} from '../algorithms/IntervalColoring/IntervalGraphColoring.js'
 
 export default {

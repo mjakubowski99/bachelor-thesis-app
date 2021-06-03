@@ -1,14 +1,29 @@
 <template>
-  <div>
+  <div class="bg-dark">
     <navbar-component> </navbar-component>
+    <jumbotron-component
+        class="bg-primary text-light"
+        header="Maksymalne dopasowanie pracowników"
 
-    <div class="mt-3 w-50 ml-auto mr-auto text-center form-border">
+        lead="Tutaj możesz dodawać pracowników oraz zmiany, na których mogą pracować"
+
+        footer="Dzięki temu panelowi można znaleźć maksymalne dopasowanie pracowników do zmian, na
+        których mogą pracować. Poprzez zaznaczenie checkboxa w tabeli pracowników i zmian rozumie się,
+        że ten pracownik zgłasza możliwość pracy na takiej zmianie. Po kliknięciu przycisku 'Znajdź dopasowanie'
+        pojawi się dopasowanie, które dopasuje największą możliwą liczbę osób do zmian, na których mogą pracować"
+
+    > </jumbotron-component>
+
+    <div class="mt-3 w-50 ml-auto mr-auto text-center form-border bg-light">
       <h2 class="text-center text-light bg-dark border-bottom border-secondary"> Panel dodawania </h2>
+
       <label> Pracownik: </label>
       <input type="text" id="column-picker" class="form-control w-25 mb-2 ml-auto mr-auto" placeholder="Nazwa kolumny"/>
       <button class="btn btn-primary mr-2 d-inline w-25 mb-2" @click="addColumn"> Dodaj pracownika </button>
+
       <br>
       <br>
+
       <label> Podaj godzine poczatkowa: </label>
       <b-form-timepicker v-model="rowPickerStart" class="w-25 mb-2 ml-auto mr-auto" locale="pl"> </b-form-timepicker>
       <label> Podaj godzine koncowa: </label>
@@ -36,34 +51,35 @@
 
 
 
-    <h1 class="text-center mt-5"> Grafik </h1>
-    <table class="table table-bordered text-center w-75 ml-auto mr-auto">
-      <thead v-if="columns.length !== 0" class="bg-dark text-light">
-      <tr>
-        <th scope="col"></th>
-        <th v-for="column in columns" :key="column" scope="col">{{ column }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
-        <th scope="row" class="bg-dark text-light">{{row}}</th>
-        <td v-for="(column, columnIndex) in columns" :key="columnIndex" :id="'field-'+rowIndex+'-'+columnIndex">
-            <input type="checkbox"/>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <h1 class="ml-auto mr-auto text-center text-light w-50 mt-5 bg-dark border rounded"> Grafik </h1>
+      <div class="text-center text-light" v-if="columns.length === 0 && rows.length === 0"> Tu pojawi się tabela pracowników </div>
+      <table class="table table-bordered text-center w-75 ml-auto mr-auto">
+          <thead v-if="columns.length !== 0" class="bg-dark text-light">
+            <tr>
+              <th scope="col"></th>
+              <th v-for="column in columns" :key="column" scope="col">{{ column }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
+              <th scope="row" class="bg-dark text-light">{{row}}</th>
+              <td v-for="(column, columnIndex) in columns" :key="columnIndex" :id="'field-'+rowIndex+'-'+columnIndex">
+                  <input type="checkbox"/>
+              </td>
+            </tr>
+          </tbody>
+      </table>
 
-    <div v-if="prepared" class="card ml-auto mr-auto mt-3 mb-3" style="width: 18rem;">
-      <div class="card-header">
-        Dopasowania
+      <div v-if="prepared" class="card ml-auto mr-auto mt-3" style="width: 18rem;">
+        <div class="card-header">
+          Dopasowania
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" v-for="(item,index) in result" :key="index">
+            {{ item[0] }} -> {{ item[1] }}
+          </li>
+        </ul>
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item" v-for="(item,index) in result" :key="index">
-          {{ item[0] }} -> {{ item[1] }}
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 
@@ -74,10 +90,11 @@ import NavbarComponent from '../components/NavbarComponent.vue'
 import {Graph} from '../algorithms/HopcroftKarp/Graph.js'
 import {HopcroftKarp} from '../algorithms/HopcroftKarp/Hopcroft.js'
 import BipartiteMatchingVisual from "../components/BipartiteMatchingVisual";
+import JumbotronComponent from "../components/JumbotronComponent";
 
 export default {
   name: "JobAssignmentComponent",
-  components: {BipartiteMatchingVisual, NavbarComponent},
+  components: {BipartiteMatchingVisual, NavbarComponent, JumbotronComponent},
   data(){
     return{
       rowPickerStart: null,

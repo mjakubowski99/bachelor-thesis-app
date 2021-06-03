@@ -3,7 +3,7 @@
       <div class="bg-violet pb-5">
           <navbar-component> </navbar-component>
           <jumbotron-component
-              class="bg-white text-dark"
+              class="bg-primary text-light"
               header="Wyznaczanie ścieżki krytycznej"
 
               lead="W tym panelu można dodać zadania oraz zależności, w których definiuje się, które zadanie ma być przed
@@ -17,9 +17,8 @@
               wyświetlić graf wygenerowany dla podanych danych"
 
           > </jumbotron-component>
-          <div class="text-light bg-white mt-5 w-75 ml-auto mr-auto rounded">
-              <br>
-              <div class="mt-2 border-bottom border-muted h2 text-dark text-center"> Plan Project </div>
+          <div class="text-light bg-white mt-5 w-75 ml-auto mr-auto border rounded">
+              <div class="bg-dark border-bottom border-muted h2 text-center"> Zaplanuj projekt </div>
 
               <div class="d-flex text-dark">
                 <div class="data-container ml-3 mb-3 mr-3 w-50 mt-4">

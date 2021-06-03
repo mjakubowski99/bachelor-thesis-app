@@ -70,7 +70,7 @@ export default {
         for (let j = 0; j < this.graph[i].neighbours.length; j++) {
           this.elements.push(
               {
-                data: {id: 'edge-'+h, source: this.graph[i].v, target: this.graph[i].neighbours[j]},
+                data: {id: 'edge-'+h, source: this.graph[i].v + 1, target: this.graph[i].neighbours[j] + 1},
                 group: "edges"
               }
           );
@@ -101,7 +101,7 @@ export default {
         if( this.graph[i] !== undefined ){
           this.elements.push(
               {
-                data: { id: this.graph[i].v },
+                data: { id: this.graph[i].v + 1 },
                 position: { x: this.getRandomInt(0,1200), y: this.getRandomInt(0,500) },
                 group: "nodes"
               },

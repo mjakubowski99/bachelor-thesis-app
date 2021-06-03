@@ -220,6 +220,35 @@ test('Finding cycle in graph test 2', () => {
     expect( order ).toBe( "Graf zawiera cykl" );
 })
 
+test('Finding cycle in graph test 3', () => {
+    let graph = new Graph(3);
+    graph.addEdge(0, 1, 1);
+    graph.addEdge(1,0, 1);
+
+    let criticalPath = new CriticalPath();
+    let queue = criticalPath.getVertexWithZeroInEdges(graph.getGraph);
+    let order = criticalPath.topologicalSort(graph.getGraph, queue);
+
+    expect( order ).toBe( "Graf zawiera cykl" );
+})
+
+test('Finding cycle in graph test 4', () => {
+    let graph = new Graph(10);
+    graph.addEdge(0, 1, 1);
+    graph.addEdge(1,2,1);
+    graph.addEdge(2,3,1);
+    graph.addEdge(3,4,1);
+    graph.addEdge(4,5,1);
+    graph.addEdge(5,1,1);
+
+
+    let criticalPath = new CriticalPath();
+    let queue = criticalPath.getVertexWithZeroInEdges(graph.getGraph);
+    let order = criticalPath.topologicalSort(graph.getGraph, queue);
+
+    expect( order ).toBe( "Graf zawiera cykl" );
+})
+
 test( 'Topological sort order', () => {
     let graph = new Graph(4);
     graph.addEdge(0,1, 1);
@@ -276,6 +305,6 @@ test('Longest path test 5', () => {
     expect( doCriticalPath5() ).toBe( 31 );
 })
 
-test('Longest path test 5', () => {
+test('Longest path test 6', () => {
     expect( doCriticalPath6() ).toBe( 5 );
 })

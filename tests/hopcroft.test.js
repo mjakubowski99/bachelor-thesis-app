@@ -75,3 +75,18 @@ test( 'Test 3', () => {
     expect( doMatching(bipartite) ).toBe(3);
 });
 
+test( 'Test 4', () => {
+    let bipartite = new Graph(7,8);
+    bipartite.addEdge(1,1);
+    bipartite.addEdge(1,2);
+    bipartite.addEdge(2,1);
+    bipartite.addEdge(2,2);
+    bipartite.addEdge(3,2);
+    bipartite.addEdge(3,3);
+    bipartite.addEdge(3,4);
+    bipartite.addEdge(4,3);
+
+
+    expect( doMatching(bipartite) ).toBe(4);
+});
+

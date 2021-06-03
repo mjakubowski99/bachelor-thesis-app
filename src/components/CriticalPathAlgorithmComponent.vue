@@ -2,7 +2,7 @@
     <div>
       <div class="text-center mt-3">
 
-        <button @click="criticalPath" class="btn btn-danger">
+        <button @click="criticalPath" class="btn btn-danger mb-3">
           Wyznacz ścieżkę
         </button>
         <div v-if="path.length !== 0" >

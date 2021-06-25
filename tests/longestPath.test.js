@@ -265,7 +265,7 @@ test( 'Topological sort order', () => {
 })
 
 test( 'Topological sort order 2', ()=>{
-    let graph = new Graph(4);
+    let graph = new Graph(10);
     graph.addEdge(0,1, 1);
     graph.addEdge(0,2, 1);
     graph.addEdge(1,2, 1);

@@ -20,7 +20,6 @@
           <b-input-group class="mb-3 d-flex flex-row">
               <b-form-input
                   type="text"
-                  id="date-input"
                   v-model="item.start"
                   placeholder="HH:MM"
               ></b-form-input>
@@ -30,7 +29,6 @@
           <b-input-group class="mb-3 d-flex flex-row">
             <b-form-input
                 type="text"
-                id="date-input"
                 v-model="item.end"
                 placeholder="HH:MM"
             ></b-form-input>

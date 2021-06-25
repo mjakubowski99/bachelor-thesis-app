@@ -14,7 +14,7 @@
       <description-component
           title="Moduł ustalania harmonogramów pociągów"
           image-path="images/train.jpg"
-          button-link="#"
+          button-link="/#/trainScheduling"
       >
         Do realizacji tego modułu wykorzystałem algorytm kolorowania grafu interwałowego, który pozwala
         obliczyć minimalną liczbę pociągów, która jest potrzebna do zrealizowania potrzebnych
@@ -24,10 +24,18 @@
       <description-component
           title="Moduł wyznaczania ścieżki krytycznej w projekcie"
           image-path="images/project.jpg"
-          button-link="#"
+          button-link="/#/criticalPath"
       >
         Moduł ten wykorzystuje algorytm wyznaczania najdłuższej ścieżki w acyklicznym grafie
         skierowanym.
+      </description-component>
+
+      <description-component
+          title="Moduł przypisywania pracowników do zmian"
+          image-path="images/jobSchedule.jpg"
+          button-link="#/jobAssignment"
+      >
+        Moduł ten wykorzystuje algorytm wyznaczania maksymalnego skojarzenia w grafie dwudzielnym.
       </description-component>
 
     </div>

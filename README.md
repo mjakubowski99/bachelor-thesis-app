@@ -4,9 +4,9 @@ This project was developed as the practical component of my Bachelor's degree th
 
 The application includes implementations of several graph-based algorithms, including:
 
-Critical Path Method (CPM) – for identifying the critical path in a project schedule.
-Hopcroft–Karp algorithm – for finding maximum matchings in bipartite graphs.
-Interval graph coloring – for solving scheduling and resource allocation problems.
+- Critical Path Method (CPM) – for identifying the critical path in a project schedule.
+- Hopcroft–Karp algorithm – for finding maximum matchings in bipartite graphs.
+- Interval graph coloring – for solving scheduling and resource allocation problems.
 
 ## Project setup
 ```
